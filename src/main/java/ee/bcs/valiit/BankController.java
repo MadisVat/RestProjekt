@@ -21,9 +21,13 @@ public class BankController {
 
     //getAccount(String accountNr) | tagasta kui palju raha on vastaval kontol
     @GetMapping ("/accounts/{accountNr}")
-    public Integer getAmount(@RequestBody Account account, @PathVariable String accountNr) {
+    public Account getAmount(@RequestBody Account account, @PathVariable String accountNr) {
         System.out.println("Konto jääk: ");
-        return accounts.get(account.getAccountNr());
+        Integer a = accounts.get(account.getAccountNr());
+        Account accountResponse = new Account();
+        account.setAmount(a);
+        account.setAccountNr(accountNr);
+        return accountResponse;
     }
 
     @PostMapping ("/accounts")               // LISAB LISTI OBJEKTI
