@@ -1,10 +1,10 @@
 package ee.bcs.valiit;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
+@RestController
 public class BankController {
     /*
     public String getAccountNr() {
@@ -19,16 +19,21 @@ public class BankController {
 
     HashMap<String, Integer> accounts = new HashMap<String, Integer>();
 
-    @PostMapping("/accounts") // LISAB LISTI OBJEKTI
-    public void addAccount(@RequestBody Employee employee) {
-        System.out.println("Post:");
-        employees.add(employee);
+    //getAccount(String accountNr) | tagasta kui palju raha on vastaval kontol
+    @GetMapping ("/accounts/{accountNr}")
+    public Integer getAmount(@RequestBody Account account, @PathVariable String accountNr) {
+        System.out.println("Konto jääk: ");
+        return accounts.get(account.getAccountNr());
+    }
 
-        //@GetMapping("/accounts") //PRINDIB LISTI
-        //public HashMap<Account, amount> getAllAccounts() {
-        //    System.out.println("List of accounts:");
-        //    return accounts;
-        //}
+    @PostMapping ("/accounts")               // LISAB LISTI OBJEKTI
+    public Integer addAccount(@RequestBody Account account) {
+        System.out.println("Added account: ");
+        accounts.put(account.getAccountNr(), account.getAmount());
+        return accounts.get(account.getAccountNr());
+    }
+
+
 
     /*@PostMapping("/employees") // LISAB LISTI OBJEKTI
     public void addEmployee(@RequestBody Employee employee) {
@@ -55,5 +60,4 @@ public class BankController {
         employees.remove(id);
     }
     */
-    }
 }

@@ -1,10 +1,8 @@
 package ee.bcs.valiit;
 
-import java.math.BigDecimal;
-
 public class Account {
     private String accountNr;
-    private BigDecimal amount;
+    private Integer amount;
 
     public String getAccountNr() {
         return accountNr;
@@ -14,11 +12,11 @@ public class Account {
         this.accountNr = accountNr;
     }
 
-    public BigDecimal getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 }
