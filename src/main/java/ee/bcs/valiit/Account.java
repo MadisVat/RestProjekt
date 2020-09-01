@@ -1,22 +1,22 @@
 package ee.bcs.valiit;
 
 public class Account {
-    private String accountNr;
-    private Integer amount;
+    private String accountnr;
+    private Integer balance;
 
-    public String getAccountNr() {
-        return accountNr;
+    public String getAccountnr() {
+        return accountnr;
     }
 
-    public void setAccountNr(String accountNr) {
-        this.accountNr = accountNr;
+    public void setAccountnr(String accountnr) {
+        this.accountnr = accountnr;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public Integer getBalance() {
+        return balance;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setBalance(Integer balance) {
+        this.balance = balance;
     }
 }
