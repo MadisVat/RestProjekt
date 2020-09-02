@@ -25,14 +25,14 @@ public class BankController {
         jdbcTemplate.update(sql, paramMap);
     }
 
-    @GetMapping("balance")
-    public void getBalanceDto(@RequestBody AccountDto accounts) {
+    @GetMapping("balance")      //get üldiselt ei peaks olema REQiga...vaata eelmist
+    public String getBalanceDto(@RequestBody AccountDto accounts) {
         //String sql = "INSERT INTO bank (id, account_no, balance) VALUES (:id, :account_no, :balance)";
-        String sql = "SELECT account_no FROM account_no where id = :id";
+        String sql = "SELECT balance FROM account_no where account_number = :accountNumber";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", accounts.getId());
-        jdbcTemplate.queryForObject(sql, paramMap, String.class);
-        
+        paramMap.put("accountNumber", accounts.getAccountNo());
+        return jdbcTemplate.queryForObject(sql, paramMap, String.class);
+        //see ei tööta hetkel
     }
 
 
