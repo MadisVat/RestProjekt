@@ -25,6 +25,21 @@ public class BankController {
         jdbcTemplate.update(sql, paramMap);
     }
 
+    @GetMapping("balance")
+    public void getBalanceDto(@RequestBody AccountDto accounts) {
+        //String sql = "INSERT INTO bank (id, account_no, balance) VALUES (:id, :account_no, :balance)";
+        String sql = "SELECT account_no FROM account_no where id = :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", accounts.getId());
+        jdbcTemplate.queryForObject(sql, paramMap, String.class);
+        
+    }
+
+
+
+    // jdbcTemplate.update(sql, paramMap);   queryForObject konto balanci küsimiseks
+    // ja pärast update
+
 /*    ALGNE toimiv
         @GetMapping("sqltest")
         public String testSql() {

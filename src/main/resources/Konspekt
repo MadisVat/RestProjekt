@@ -1,0 +1,98 @@
+Kompileerimine näiteks – javac HelloWorld.java
+Käivitamine käsurealt – java HelloWorld
+Ctrl-alt L teeb ilusaks
+GIT’i kasutamine
+Git clone //ja link otse järgi.
+
+
+HOMME: rekurssioon, sisend.
+
+25.08. (kodus: tunnitöö panna toimima nullidega ja lõputusse tsüklisse)
+Scanner scanner = new Scanner(System.in);
+
+int n = scanner.nextInt(); // loeb 1 täisarvu
+
+String rida = scanner.nextLine(); // loeb teksti kuni
+rea vahetuseni
+for(int = 0; int < x; i++){
+    testList.get(i);
+    }
+
+Arrays.toString(new int[0]);
+for(Integer i : testList) {
+	System.out.println(i);
+}
+ 
+SQL 200902
+INSERT INTO db_name (account_nr, balance, id, client_id)
+VALUES ('EE11', 10, 1234, 1111);
+
+SELECT * FROM table_name;
+SELECT column1, column2 FROM table_name;
+SELECT * FROM table_name where column_name = ’column_value’
+
+UPDATE db_name SET column_name =
+‘column_value’ WHERE id = 5;
+
+DELET
+DELETE FROM table_name WHERE id = 5;
+
+
+Erki Eessaare kursus TTÜ
+
+ANDMEBAASI ÜHENDUSE LOOMINE:
+Pom.xml faili lisada read:
+<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+    </dependency>
+
+<dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
++ maveniga refresh
+
+
+
+
+
+ 
+Rudolfi hommik:
+•	Mentaliteet „get shit done“
+•	Lõbusalt agressiivne ehk küsija suu pihta ei lööda
+•	Ole realistlik ning mõista enda positsiooni turul
+•	Mõtle välja enda lugu ehk kes ma „suureks“ saades olla tahaks
+•	Käesolev 3,5 kuud on mõeldud sulle kui õppeperiood – kasuta seda targalt.
+LinkedIn
+•	Lisa kontakte, kes võivad olla kasulikud
+•	Kirjuta inimestele otse (kasuta LinkedIn Chat)
+•	Märgi üles enda töö ja praktika otsingu parameetrid
+•	Kui on miskit tarka jagada, siis tee seda.
+CV
+•	Näe vaeva ning tee CV omapäraseks
+•	Lisa sinna info, mis tegelikult loeb
+•	Ära kasuta portaalide default vorme
+•	(formaalne pilt, soovitajad, keeled, koolitused)
+
+Motivatsioonikiri
+•	Näe vaeva ning muuda vastavalt ettevõtte taustale
+•	Kirja eesmärk on saada vestlusele
+•	Lase lugeda tuttaval ning las ta annab soovitusi
+•	Küsi endal, et kas sa iseennast võtaksid tööle
+•	Sisu:
+o	Miks ma kirjutan (olen ümberõppimas)
+o	Kes ma olen (varasem taust, iseloomustus)
+o	Kus suunas ma pürgin (sinu story, ametikohad, kus ma 3 aasta pärast olla tahan)
+o	Mida ma suudan pakkuda (mida olen õppinud, kuidas toetab mu taust ettevõtte arengut jne)
+Sõjaplaan
+•	Loon listi ettevõtetest ning arutan läbi selle Rudolfiga
+•	Leian kontaktid (numbrid, e-mailid) – küsida Rudolfilt ja uurida kodulehte ja LinkedInni
+o	Väikeettevõttes tegevjuhiga ühendust võtta, suuremates HR’ga
+•	Võtame ühendust ning proovime sind vestlema saada ( mina või sina)
+•	Mida rohkem, seda uhkem ( ei maksa loota 1 kindla peale)
+•
+
+
+
