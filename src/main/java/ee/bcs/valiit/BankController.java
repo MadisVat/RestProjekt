@@ -1,27 +1,53 @@
 package ee.bcs.valiit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class BankController {
-    /*
-    public String getAccountNr() {
-        return accountNr;
-    public void setAccountNr(String accountNr) {
-        this.accountNr = accountNr;
-    public BigDecimal getAmount() {
-        return amount;
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    */
 
     HashMap<String, Integer> accounts = new HashMap<String, Integer>();
+
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
+    @PostMapping("add")
+    public void addAccountDto(@RequestBody AccountDto accounts) {
+        String sql = "INSERT INTO bank (id, account_no, balance) VALUES (:id, :account_no, :balance)";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", accounts.getId());
+        paramMap.put("account_no", accounts.getAccountNo());
+        paramMap.put("balance", accounts.getBalance());
+        jdbcTemplate.update(sql, paramMap);
+    }
+
+/*    ALGNE toimiv
+        @GetMapping("sqltest")
+        public String testSql() {
+        String sql = "SELECT account_nr FROM account where id = :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", 1234);
+        String vastus = jdbcTemplate.queryForObject(sql, paramMap, String.class);
+
+        sql = "UPDATE account SET balance = :balance where id = :id";
+        paramMap = new HashMap<>();
+        paramMap.put("balance", 50);
+        paramMap.put("id", 2345);
+        jdbcTemplate.update(sql, paramMap);
+        return vastus;
+    }*/
+
+
+//==================================================================================
 
     @PostMapping("/accounts/{accountnr}")
     //  http://localhost:8080/accounts/EE11
     public void addAccount(@PathVariable String accountnr) {
+
         System.out.println("Added account: \"" + accountnr + "\"");
         accounts.put(accountnr, 0);
         System.out.println("=====");
@@ -33,6 +59,7 @@ public class BankController {
         System.out.println("Account \"" + accountnr + "\" balance: " + accounts.get(accountnr));
         System.out.println("=====");
         return accounts.get(accountnr);
+
 
     }
 
@@ -64,7 +91,8 @@ public class BankController {
 
     //transferMoney(String account1, String account2, amount) | kanna raha esimeselt kontolt teisele kontole
     @PutMapping("/transfer/{accountnr},{toaccountnr}")
-    public void transfer(@PathVariable String accountnr, @PathVariable String toaccountnr, @RequestBody Integer ülekanne) {
+    public void transfer(@PathVariable String accountnr, @PathVariable String toaccountnr, @RequestBody Integer
+            ülekanne) {
         System.out.println("Transfer money");
         System.out.println("Initial balance for account " + "\"" + accountnr + "\":" + accounts.get(accountnr));
         System.out.println("Transfer request progressed for amount: " + ülekanne);
