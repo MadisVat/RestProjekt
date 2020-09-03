@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 public class BankController {
 
     HashMap<String, Integer> accounts = new HashMap<String, Integer>();
-
+    //BigDecimal newBalance = currentBalance.subtract(amount);
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -23,18 +24,97 @@ public class BankController {
         paramMap.put("account_no", accounts.getAccountNo());
         paramMap.put("balance", accounts.getBalance());
         jdbcTemplate.update(sql, paramMap);
+        // postmanni(JSON):
+        //  "id": 3333,
+        //  "accountNo": "RU33",
+        //  "balance": 700
     }
 
-    @GetMapping("balance")      //get üldiselt ei peaks olema REQiga...vaata eelmist
-    public String getBalanceDto(@RequestBody AccountDto accounts) {
-        //String sql = "INSERT INTO bank (id, account_no, balance) VALUES (:id, :account_no, :balance)";
-        String sql = "SELECT balance FROM account_no where account_number = :accountNumber";
+   /* DEBUGGING RAIVOGA KOOS
+   @PutMapping("deposit2/{account}")      //get üldiselt ei peaks olema RequestBodyga....pigem Paramiga
+    public void getBalanceDto2(@PathVariable String account, @RequestBody Integer amount) { //peab vastama sellele andmetüübile, mis sa POSTmanis sisse annad
+        String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("accountNumber", accounts.getAccountNo());
+        paramMap.put("account_no", account);
+        //System.out.println(jdbcTemplate.queryForObject(sql, paramMap, Integer.class)+amount);
+        Integer newBalance = jdbcTemplate.queryForObject(sql, paramMap, Integer.class) + amount;
+        System.out.println(newBalance);
+        System.out.println(paramMap.get("account_no"));
+        paramMap.put("balance", newBalance);
+        sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
+        //UPDATE bank SET balance = 600 WHERE account_no = 'RU33';
+        System.out.println(sql);
+        jdbcTemplate.update(sql, paramMap);
+    }*/
+
+    @GetMapping("balance")      //get üldiselt ei peaks olema RequestBodyga....pigem Paramiga
+    public String getBalanceDto(@RequestBody String accounts) { //peab vastama sellele andmetüübile, mis sa POSTmanis sisse annad
+        String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("account_no", accounts);
         return jdbcTemplate.queryForObject(sql, paramMap, String.class);
-        //see ei tööta hetkel
+
+        // postmanni(text): RU33
     }
 
+    @PutMapping("deposit/{accountNumber}")
+    public void depositMoneyDto(@PathVariable/*("id")*/ String accountNumber, @RequestBody BigDecimal amount) {
+        String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("account_no", accountNumber);
+        BigDecimal currentBalance = jdbcTemplate.queryForObject(sql, paramMap, BigDecimal.class);
+        System.out.println("CurrentBalance: " + currentBalance);
+        //sum = a.add(b);
+        BigDecimal newBalance = currentBalance.add(amount);
+        paramMap.put("balance", newBalance);
+        sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
+        System.out.println("Deposited amount: " + amount);
+        System.out.println("New Balance: " + newBalance);
+        jdbcTemplate.update(sql, paramMap);
+    }
+
+    @PutMapping("withdraw/{accountNumber}")
+    public void withdrawMoneyDto(@PathVariable/*("id")*/ String accountNumber, @RequestBody BigDecimal amount) {
+        String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("account_no", accountNumber);
+        BigDecimal currentBalance = jdbcTemplate.queryForObject(sql, paramMap, BigDecimal.class);
+        System.out.println("CurrentBalance: " + currentBalance);
+        //sum = a.add(b);
+        BigDecimal newBalance = currentBalance.subtract(amount);
+        paramMap.put("balance", newBalance);
+        sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
+        System.out.println("Withdrawn amount: " + amount);
+        System.out.println("New Balance: " + newBalance);
+        jdbcTemplate.update(sql, paramMap);
+    }
+
+        @PutMapping("transfer/{fromAccountNumber},{toAccountNr}")
+    public String transferMoneyDto(@PathVariable String fromAccountNumber, @PathVariable String toAccountNr, @RequestBody BigDecimal amount) {
+        String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("account_no", fromAccountNumber);
+        BigDecimal currentBalance = jdbcTemplate.queryForObject(sql, paramMap, BigDecimal.class);
+        int result = currentBalance.compareTo(amount);
+        if (result >= 0) {
+            BigDecimal newBalanceTo = currentBalance.add(amount);
+            BigDecimal newBalanceFrom = currentBalance.subtract(amount);
+            paramMap.put("balance", newBalanceTo);
+            paramMap.put("account_no", toAccountNr);
+            sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
+            jdbcTemplate.update(sql, paramMap);
+
+            paramMap.put("balance", newBalanceFrom);
+            paramMap.put("account_no", fromAccountNumber);
+            sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
+            jdbcTemplate.update(sql, paramMap);
+            return "OK";
+        } else{
+            return "NOP";
+        }
+
+
+    }
 
 
     // jdbcTemplate.update(sql, paramMap);   queryForObject konto balanci küsimiseks
@@ -59,7 +139,7 @@ public class BankController {
 
 //==================================================================================
 
-    @PostMapping("/accounts/{accountnr}")
+    @PostMapping("/vanaaccounts/{accountnr}")
     //  http://localhost:8080/accounts/EE11
     public void addAccount(@PathVariable String accountnr) {
 
@@ -68,7 +148,7 @@ public class BankController {
         System.out.println("=====");
     }
 
-    @GetMapping("/balance/{accountnr}")
+    @GetMapping("/vanabalance/{accountnr}")
     //  http://localhost:8080/balance/EE12345
     public Integer getBalance(@PathVariable String accountnr) {
         System.out.println("Account \"" + accountnr + "\" balance: " + accounts.get(accountnr));
@@ -78,7 +158,7 @@ public class BankController {
 
     }
 
-    @PutMapping("/deposit/{accountnr}")
+    @PutMapping("/vanadeposit/{accountnr}")
     public void depositMoney(@PathVariable String accountnr, @RequestBody Integer raha) {
         System.out.println("Deposit money");
         System.out.println("Initial balance for account " + "\"" + accountnr + "\":" + accounts.get(accountnr));
@@ -89,7 +169,7 @@ public class BankController {
 
     }
 
-    @PutMapping("/withdraw/{accountnr}")
+    @PutMapping("/vanawithdraw/{accountnr}")
     public void withdrawMoney(@PathVariable String accountnr, @RequestBody Integer raha) {
         System.out.println("Withdraw money");
         System.out.println("Initial balance for account " + "\"" + accountnr + "\":" + accounts.get(accountnr));
@@ -105,7 +185,7 @@ public class BankController {
     }
 
     //transferMoney(String account1, String account2, amount) | kanna raha esimeselt kontolt teisele kontole
-    @PutMapping("/transfer/{accountnr},{toaccountnr}")
+    @PutMapping("/vanatransfer/{accountnr},{toaccountnr}")
     public void transfer(@PathVariable String accountnr, @PathVariable String toaccountnr, @RequestBody Integer
             ülekanne) {
         System.out.println("Transfer money");
