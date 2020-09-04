@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+//@RestController
 public class BankController {
 
     HashMap<String, Integer> accounts = new HashMap<String, Integer>();
@@ -48,12 +48,11 @@ public class BankController {
     }*/
 
     @GetMapping("balance")      //get üldiselt ei peaks olema RequestBodyga....pigem Paramiga
-    public String getBalanceDto(@RequestBody String accounts) { //peab vastama sellele andmetüübile, mis sa POSTmanis sisse annad
+        public String getBalanceDto(@RequestBody String accounts) { //peab vastama sellele andmetüübile, mis sa POSTmanis sisse annad
         String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("account_no", accounts);
         return jdbcTemplate.queryForObject(sql, paramMap, String.class);
-
         // postmanni(text): RU33
     }
 
@@ -89,27 +88,40 @@ public class BankController {
         jdbcTemplate.update(sql, paramMap);
     }
 
-        @PutMapping("transfer/{fromAccountNumber},{toAccountNr}")
-    public String transferMoneyDto(@PathVariable String fromAccountNumber, @PathVariable String toAccountNr, @RequestBody BigDecimal amount) {
+
+    //MIINUS MÄRGIGA SUMMAD TULEKS ÄRA KEELATA
+    @PutMapping("transfer/{fromAccountNr},{toAccountNr}")
+    public String transferMoneyDto(@PathVariable String fromAccountNr, @PathVariable String toAccountNr, @RequestBody BigDecimal amount) {
         String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("account_no", fromAccountNumber);
-        BigDecimal currentBalance = jdbcTemplate.queryForObject(sql, paramMap, BigDecimal.class);
-        int result = currentBalance.compareTo(amount);
+        paramMap.put("account_no", fromAccountNr);
+        BigDecimal currentBalanceFrom = jdbcTemplate.queryForObject(sql, paramMap, BigDecimal.class);
+        System.out.println(" ");
+        System.out.println("Current Balance FROM: " + currentBalanceFrom);
+        int result = currentBalanceFrom.compareTo(amount);
         if (result >= 0) {
-            BigDecimal newBalanceTo = currentBalance.add(amount);
-            BigDecimal newBalanceFrom = currentBalance.subtract(amount);
+            //BigDecimal newBalanceTo = currentBalance.add(amount);
+            BigDecimal newBalanceFrom = currentBalanceFrom.subtract(amount);
+            paramMap.put("balance", newBalanceFrom);
+            paramMap.put("account_no", fromAccountNr);
+            sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
+            System.out.println("New Balance FROM: " + newBalanceFrom);
+            jdbcTemplate.update(sql, paramMap);
+
+            sql = "SELECT balance FROM bank WHERE account_no = :account_no";
+            paramMap.put("account_no", toAccountNr);
+            BigDecimal currentBalanceTo = jdbcTemplate.queryForObject(sql, paramMap, BigDecimal.class);
+            BigDecimal newBalanceTo = currentBalanceTo.add(amount);
+            System.out.println(" ");
+            System.out.println("Current Balance TO: " + currentBalanceTo);
             paramMap.put("balance", newBalanceTo);
             paramMap.put("account_no", toAccountNr);
             sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
+            System.out.println("New Balance TO: " + newBalanceTo);
             jdbcTemplate.update(sql, paramMap);
 
-            paramMap.put("balance", newBalanceFrom);
-            paramMap.put("account_no", fromAccountNumber);
-            sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
-            jdbcTemplate.update(sql, paramMap);
             return "OK";
-        } else{
+        } else {
             return "NOP";
         }
 

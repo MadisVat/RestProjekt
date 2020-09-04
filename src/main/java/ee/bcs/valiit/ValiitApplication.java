@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ValiitApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ValiitApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ValiitApplication.class, args);
+    }
 
 }
