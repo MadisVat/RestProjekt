@@ -5,11 +5,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
 @Repository
 public class AccountRepository {
+
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -29,20 +31,13 @@ public class AccountRepository {
         jdbcTemplate.update(sql, paramMap);
     }
 
+    public void createAccount(AddAccount addAccount) {
+        String sql = "INSERT INTO bank (account_no, balance, id) VALUES (:account_no, :balance, :id)";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("account_no", addAccount.getAccountNumber());
+        paramMap.put("balance", addAccount.getBalance());
+        paramMap.put("id", addAccount.getId());
+        jdbcTemplate.update(sql, paramMap);
+    }
+
 }
-
-//    @PutMapping("deposit/{accountNumber}")
-//    public void depositMoneyDto(@PathVariable*//*("id")*//* String accountNumber, @RequestBody BigDecimal amount) {
-//            String sql="SELECT balance FROM bank WHERE account_no = :account_no";
-//            Map<String, Object>paramMap=new HashMap();
-//        paramMap.put("account_no",accountNumber);
-//                BigDecimal currentBalance=jdbcTemplate.queryForObject(sql,paramMap,BigDecimal.class);
-//        System.out.println("CurrentBalance: "+currentBalance);
-//        //sum = a.add(b);
-//        BigDecimal newBalance=currentBalance.add(amount);
-//        paramMap.put("balance",newBalance);
-//        sql="UPDATE bank SET balance = :balance WHERE account_no = :account_no";
-//        System.out.println("Deposited amount: "+amount);
-//        System.out.println("New Balance: "+newBalance);
-//        jdbcTemplate.update(sql,paramMap);
-

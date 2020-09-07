@@ -18,28 +18,31 @@ public class DataController {
 
     @PutMapping("deposit/{accountNumber}")
     public void deposit(@PathVariable("accountNumber") String request, @RequestBody BigDecimal amount) {
-        accountService.depositCurreny(request, amount);
+        accountService.depositCurrency(request, amount);
     }
+
+    @PutMapping("withdraw/{accountNumber}")
+    public void withdraw(@PathVariable("accountNumber") String request, @RequestBody BigDecimal amount) {
+        accountService.withdrawCurrency(request, amount);
+    }
+
+    @PutMapping("transfer/{fromAccountNumber},{toAccountNumber}")
+    public void transfer(@PathVariable String fromAccountNumber, @PathVariable String toAccountNumber, @RequestBody BigDecimal amount) {
+        accountService.transferCurrency(fromAccountNumber, toAccountNumber, amount);
+    }
+
+    @PutMapping("createAccount")
+    public void createAccount(@RequestBody AddAccount addAccount) {
+        accountService.createAccount(addAccount);
+
+        // accountService.createAccount(addAccount.getAccountNumber(), addAccount.getBalance(), addAccount.getId());
+        /*{
+        "accountNumber": "EE333",
+            "balance": 0,
+            "id": 8888
+    }*/
+    }
+
 
 
 }
-
-   /* @PutMapping("deposit/{accountNumber}")
-    public void depositMoneyDto(@PathVariable*//*("id")*//* String accountNumber, @RequestBody BigDecimal amount) {
-        String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("account_no", accountNumber);
-        BigDecimal currentBalance = jdbcTemplate.queryForObject(sql, paramMap, BigDecimal.class);
-        System.out.println("CurrentBalance: " + currentBalance);
-        //sum = a.add(b);
-        BigDecimal newBalance = currentBalance.add(amount);
-        paramMap.put("balance", newBalance);
-        sql = "UPDATE bank SET balance = :balance WHERE account_no = :account_no";
-        System.out.println("Deposited amount: " + amount);
-        System.out.println("New Balance: " + newBalance);
-        jdbcTemplate.update(sql, paramMap);
-    }
-
-    @PutMapping("add")
-    public void add(@RequestBody AddMoneyRequest request) {
-        accountService.addMoney(request.getToAccount(),request.getAmount());*/

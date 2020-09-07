@@ -89,7 +89,8 @@ public class BankController {
     }
 
 
-    //MIINUS MÄRGIGA SUMMAD TULEKS ÄRA KEELATA
+    // TODO MIINUS MÄRGIGA SUMMAD TULEKS ÄRA KEELATA
+
     @PutMapping("transfer/{fromAccountNr},{toAccountNr}")
     public String transferMoneyDto(@PathVariable String fromAccountNr, @PathVariable String toAccountNr, @RequestBody BigDecimal amount) {
         String sql = "SELECT balance FROM bank WHERE account_no = :account_no";
