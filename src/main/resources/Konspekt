@@ -17,6 +17,7 @@ rea vahetuseni
 for(int = 0; int < x; i++){
     testList.get(i);
     }
+    5584268
 
 Arrays.toString(new int[0]);
 for(Integer i : testList) {

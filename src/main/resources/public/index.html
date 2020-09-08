@@ -121,12 +121,34 @@ while(a<10){
 <button id="testButton3">
     THE BUTTON no 3
 </button>
-
-<button id="button5">
-    BUTTON no 5
+<br>
+<input id="sise"/>
+<button id="muudetavNupp">
+    Nupp
 </button>
 
+
+<!-- Fetch: getBalance -->
+<input id="balanceinput" placeholder="Enter account number"/>
+<button id="button5">
+     Get account balance
+</button>
+<p id="outputtext">
+    Write balance here</p>
+
+<!-- Fetch: depositMoney -->
+<input id="depositinputaccount" placeholder="Enter account number"/>
+<input id="depositinputamount" placeholder="Enter deposit amount"/>
+<button id="depositbutton">
+    Deposit Money
+</button>
+<p id="depositoutput">
+    Write balance here</p>
+
+
 <script>
+    let mingitekst = document.getElementById("outputtext");
+
     let button2 = document.getElementById("testButton2");
     button2.onclick = function () {
         alert("Button no 2");
@@ -138,28 +160,17 @@ while(a<10){
     }
     button3.addEventListener("click", action);
 
-
-</script>
-
-<br>
-<input id="sise"/>
-<button id="muudetavNupp">
-    Nupp
-</button>
-<script>
     let replaceableText = document.getElementById("sise");
     let button4 = document.getElementById("muudetavNupp");
     button4.onclick = function () {
         muudetavNupp.innerHTML = replaceableText.value;
     }
 
+    let muutuja = document.getElementById("balanceinput");
 
-</script>
-
-<script>
     let button5 = document.getElementById("button5");
     button5.onclick = function () {
-        fetch('localhost:8080/balance/EE111', {
+                fetch("balance/"+ muutuja.value, {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -171,12 +182,36 @@ while(a<10){
             })
             .then(function (jsonData) {
                 console.log(jsonData);
+                mingitekst.innerHTML = jsonData;
             })
             .catch(function (err) {
                 messages.innerText = 'This does not seem right';
             });
     };
+    /*@PutMapping("deposit/{accountNumber}")*/
+    let depositinputaccount = document.getElementById("depositinputaccount");
+    let depositinputamount = document.getElementById("depositinputamount");
 
+    let depositbutton = document.getElementById("depositbutton");
+    depositbutton.onclick = function () {
+        fetch("deposit/"+ depositmuutuja.value, {
+            method: 'PUT',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (jsonData) {
+                console.log(jsonData);
+                mingitekst.innerHTML = jsonData;
+            })
+            .catch(function (err) {
+                messages.innerText = 'This does not seem right';
+            });
+    };
 
 </script>
 
