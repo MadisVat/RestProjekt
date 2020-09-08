@@ -3,174 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- <script src = "getbalance.js"></script>-->
 </head>
-
 <body>
 
-<br>
-<a href="https://sport.err.ee/1131770/ott-tanak-voitis-ajaloolise-rally-estonia">ULMEEE</a>
-<br>
-first create the bookmark
-<h2 id=”book”> my books</h2>
-Then link it
-<a href=”#book">see my book list</a>
 <br/>
-
-<ul>
-    <li>List 1</li>
-    <li>List 2</li>
-    <li>List 3</li>
-</ul>
-
-<ol>
-    <li>List 1</li>
-    <li>List 2</li>
-    <li>List 3</li>
-</ol>
-
-<dl>
-    <dt>Term 1</dt>
-    <dt>Term 2</dt>
-    <dd>Definition of term</dd>
-    <dd>Definition of term 2</dd>
-</dl>
-<!--<script>
-let a = 5;
-let b = "5";
-    if(a==b){
-        alert('Võrdsed');
-}else{
-    alert('Mitte');
-}
-</script>-->
-
-<!--<script>
-let a =1;
-while(a<10){
-    console.log(a);
-    a++;
-}
-</script>-->
-<script>
-    function myFunction() {
-        let abc = 200;
-        console.log(abc);
-    }
-
-
-</script>
-<!--<table width="763px" border="1" align="center" cellpadding="5" cellspacing="3”>
-
-<tr align="center" valign="middle" bgcolor="#597172”>
-
-<td height="99" colspan="2”>-->
-
-<table border=4 width="1600px" bgcolor=“#597172” colspan="4">
-    <tr>
-        <td>
-            <input type="submit" name="submit" value="DON'T press"/>
-        </td>
-        <td>
-            <input type="reset" name="reset" value="Reset"/>
-        </td>
-        <td>
-            <input type="button" name="ok" value="OK"/>
-        </td>
-        <td>
-            <input type="image" name="imagebutton" src="/html/images/logo.png"/>
-        </td>
-
-    </tr>
-    <tr>
-        <td>
-            test 3
-        </td>
-        <td>
-            test 4
-        </td>
-    </tr>
-</table>
-<p id="test">
-    mingi tekst
+<br/>
+<p id="lihtsalt_tekst1">
+    WELCOME TO THE BANK!
+</p>
+<br/>
+<p id="lihtsalt_tekst2">
+    Your account balance.
 </p>
 
-<script>
-    let element = document.getElementById("test");
-    console.log(element)
-    console.log(element.innerHTML);
-    element.innerHTML = "ASENDUSTEKST";
-
-    element.onclick = function () {
-        alert('OPA!');
-    };
-
-
-</script>
-
-
-<!-- Method 1 -->
-<button onclick="alert('Tere!');">
-    DON'T press 1
-</button>
-
-<!-- Method 2 -->
-<button id="testButton2">
-    SUBMIT
-</button>
-
-<button id="testButton3">
-    THE BUTTON no 3
-</button>
-<br>
-<input id="sise"/>
-<button id="muudetavNupp">
-    Nupp
-</button>
-
-
 <!-- Fetch: getBalance -->
-<input id="balanceinput" placeholder="Enter account number"/>
-<button id="button5">
-     Get account balance
+
+<input id="balance_input" placeholder="Enter account number"/>
+
+<button id="balance_button">
+    Get account balance
 </button>
-<p id="outputtext">
-    Write balance here</p>
 
-<!-- Fetch: depositMoney -->
-<input id="depositinputaccount" placeholder="Enter account number"/>
-<input id="depositinputamount" placeholder="Enter deposit amount"/>
-<button id="depositbutton">
-    Deposit Money
-</button>
-<p id="depositoutput">
-    Write balance here</p>
-
-
+<p id="output_text_balance">
+    ...........</p>
+<br/>
+<br/>
 <script>
-    let mingitekst = document.getElementById("outputtext");
 
-    let button2 = document.getElementById("testButton2");
-    button2.onclick = function () {
-        alert("Button no 2");
-    }
+    let balance_account_variable = document.getElementById("balance_input");
+    let balance_button = document.getElementById("balance_button");
 
-    let button3 = document.getElementById("testButton3");
-    let action = function () {
-        alert("3");
-    }
-    button3.addEventListener("click", action);
+    let balance_output = document.getElementById("output_text_balance");
 
-    let replaceableText = document.getElementById("sise");
-    let button4 = document.getElementById("muudetavNupp");
-    button4.onclick = function () {
-        muudetavNupp.innerHTML = replaceableText.value;
-    }
-
-    let muutuja = document.getElementById("balanceinput");
-
-    let button5 = document.getElementById("button5");
-    button5.onclick = function () {
-                fetch("balance/"+ muutuja.value, {
+    balance_button.onclick = function () {
+        fetch("balance/" + balance_account_variable.value, {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -182,19 +49,43 @@ while(a<10){
             })
             .then(function (jsonData) {
                 console.log(jsonData);
-                mingitekst.innerHTML = jsonData;
+                balance_output.innerHTML = jsonData;
             })
             .catch(function (err) {
                 messages.innerText = 'This does not seem right';
             });
     };
-    /*@PutMapping("deposit/{accountNumber}")*/
-    let depositinputaccount = document.getElementById("depositinputaccount");
-    let depositinputamount = document.getElementById("depositinputamount");
 
-    let depositbutton = document.getElementById("depositbutton");
-    depositbutton.onclick = function () {
-        fetch("deposit/"+ depositmuutuja.value, {
+</script>
+
+
+<!-- Fetch: depositMoney -->
+<p id="lihtsalt_tekst3">
+    Deposit funds.
+</p>
+
+
+<input id="deposit_account_variable" placeholder="Enter account number"/>
+<input id="deposit_amount_variable" placeholder="Enter deposit amount"/>
+<button id="deposit_button">
+    Deposit Money
+</button>
+
+<p id="output_text_newbalance">
+    Write new balance here</p>
+
+
+<script>
+
+    /*@PutMapping("deposit/{accountNumber}")*/
+    let deposit_account_variable = document.getElementById("deposit_account_variable");
+    let deposit_amount_variable = document.getElementById("deposit_amount_variable"); /*see läheb bodysse*/
+    let deposit_button = document.getElementById("deposit_button");
+
+    let new_balance_output = document.getElementById("output_text_newbalance");
+    
+    deposit_button.onclick = function () {
+        fetch("deposit/" + deposit_account_variable.value, {
             method: 'PUT',
             cache: 'no-cache',
             headers: {
@@ -206,7 +97,7 @@ while(a<10){
             })
             .then(function (jsonData) {
                 console.log(jsonData);
-                mingitekst.innerHTML = jsonData;
+                new_balance_output.innerHTML = jsonData;
             })
             .catch(function (err) {
                 messages.innerText = 'This does not seem right';
@@ -219,7 +110,3 @@ while(a<10){
 </body>
 </html>
 
-
-<!--let meNewElement = document.createElement("li");
-    myElement.appendChild (myNewElement);
-    myNewElement.innerHTML = "New text item";-->

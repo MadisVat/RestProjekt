@@ -123,7 +123,7 @@ public class BankController {
 
             return "OK";
         } else {
-            return "NOP";
+            return "Insufficient funds!!!";
         }
 
 

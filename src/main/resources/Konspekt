@@ -107,3 +107,141 @@ https://ctf.avalah.ee/  advanced näpuharjutus
 {} - braces (curly brackets)
 [] - brackets (square brackets)
 
+<br>
+<a href="https://sport.err.ee/1131770/ott-tanak-voitis-ajaloolise-rally-estonia">ULMEEE</a>
+<br>
+first create the bookmark
+<h2 id=”book”> my books</h2>
+Then link it
+<a href=”#book">see my book list</a>
+<br/>
+
+<ul>
+    <li>List 1</li>
+    <li>List 2</li>
+    <li>List 3</li>
+</ul>
+
+<ol>
+    <li>List 1</li>
+    <li>List 2</li>
+    <li>List 3</li>
+</ol>
+
+<dl>
+    <dt>Term 1</dt>
+    <dt>Term 2</dt>
+    <dd>Definition of term</dd>
+    <dd>Definition of term 2</dd>
+</dl>
+
+<!--<script>
+let a = 5;
+let b = "5";
+    if(a==b){
+        alert('Võrdsed');
+}else{
+    alert('Mitte');
+}
+</script>-->
+
+<!--<script>
+let a =1;
+while(a<10){
+    console.log(a);
+    a++;
+}
+</script>-->
+
+
+<script>
+    function myFunction() {
+        let abc = 200;
+        console.log(abc);
+    }
+
+</script>
+<!--<table width="763px" border="1" align="center" cellpadding="5" cellspacing="3”>
+
+<tr align="center" valign="middle" bgcolor="#597172”>
+
+<td height="99" colspan="2”>-->
+
+<table border=4 width="1600px" bgcolor=“#597172” colspan="4">
+    <tr>
+        <td>
+            <input type="submit" name="submit" value="DON'T press"/>
+        </td>
+        <td>
+            <input type="reset" name="reset" value="Reset"/>
+        </td>
+        <td>
+            <input type="button" name="ok" value="OK"/>
+        </td>
+        <td>
+            <input type="image" name="imagebutton" src="/html/images/logo.png"/>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            test 3
+        </td>
+        <td>
+            test 4
+        </td>
+    </tr>
+</table>
+
+<p id="test">
+    mingi tekst
+</p>
+<script>
+    let element = document.getElementById("test");
+    console.log(element)
+    console.log(element.innerHTML);
+    element.innerHTML = "blah";
+
+    element.onclick = function () {
+        alert('OPA!');
+    };
+</script>
+
+
+<!--let meNewElement = document.createElement("li");
+    myElement.appendChild (myNewElement);
+    myNewElement.innerHTML = "New text item";-->
+
+
+
+<!-- Method 1 -->
+<button onclick="alert('Tere!');">
+    DON'T press 1
+</button>
+
+<!-- Method 2 -->
+<button id="testButton2">
+    SUBMIT
+</button>
+
+
+<input id="sise" placeholder="Nupu nimi"/>
+<button id="muudetavNupp">
+    Nupp
+</button>
+<script>
+    let replaceableText = document.getElementById("sise");
+    let button4 = document.getElementById("muudetavNupp");
+    button4.onclick = function () {
+        muudetavNupp.innerHTML = replaceableText.value;
+    }
+</script>
+
+
+let button3 = document.getElementById("testButton3");
+    let action = function () {
+        alert("3");
+    }
+    button3.addEventListener("click", action);
+
+

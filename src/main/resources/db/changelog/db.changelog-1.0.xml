@@ -23,7 +23,7 @@
 
         </createTable>
 
-        <createTable tableName="transaction_history">
+        <!--<createTable tableName="transaction_history">
 
             <column name="transaction_id" type="bigint" autoIncrement="true">
                 <constraints nullable="true" primaryKey="true" unique="true"/>
@@ -41,7 +41,7 @@
                 <constraints nullable="true" unique="true" foreignKeyName="fk_transaction_history_account"
                              references="bank(id)"/>
             </column>
-        </createTable>
+        </createTable>-->
 
     </changeSet>
 </databaseChangeLog>
