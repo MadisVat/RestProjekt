@@ -15,13 +15,21 @@ public class AccountService {
         return accountRepository.getBalance(fromAccount);
     }
 
-    public void depositCurrency(String toAccount, BigDecimal amount) {
+    public BigDecimal depositCurrency(String toAccount, BigDecimal amount) {
         accountRepository.getBalance(toAccount);
         BigDecimal currentBalance = accountRepository.getBalance(toAccount);
         System.out.println("Current balance: " + currentBalance);
-        BigDecimal newBalance = currentBalance.add(amount);
-        System.out.println("New Balance: " + newBalance);
-        accountRepository.updateBalance(toAccount, newBalance);
+        int result = amount.compareTo(BigDecimal.ZERO);
+        if (result > 0) {
+            BigDecimal newBalance = currentBalance.add(amount);
+            System.out.println("New Balance: " + newBalance);
+            accountRepository.updateBalance(toAccount, newBalance);
+            return accountRepository.getBalance(toAccount);
+        } else {
+            System.out.println("Can not deposit a negative sum");
+            return accountRepository.getBalance(toAccount);
+        }
+
     }
 
     public void withdrawCurrency(String fromAccount, BigDecimal amount) {
@@ -54,6 +62,9 @@ public class AccountService {
     }
 
     public void createAccount(AddAccount addAccount) {
+        if (addAccount.getBalance() == null) {
+            addAccount.setBalance(BigDecimal.ZERO);
+        }
         accountRepository.createAccount(addAccount);
 
     }

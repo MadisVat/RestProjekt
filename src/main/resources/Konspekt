@@ -1,3 +1,5 @@
+5584268
+
 Kompileerimine näiteks – javac HelloWorld.java
 Käivitamine käsurealt – java HelloWorld
 Ctrl-alt L teeb ilusaks
@@ -17,7 +19,7 @@ rea vahetuseni
 for(int = 0; int < x; i++){
     testList.get(i);
     }
-    5584268
+
 
 Arrays.toString(new int[0]);
 for(Integer i : testList) {
@@ -245,3 +247,8 @@ let button3 = document.getElementById("testButton3");
     button3.addEventListener("click", action);
 
 
+CSS
+
+https://getbootstrap.com/docs/4.5/getting-started/introduction/
+
+Examples ja "custom forms"

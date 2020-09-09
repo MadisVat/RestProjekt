@@ -17,8 +17,9 @@ public class DataController {
     }
 
     @PutMapping("deposit/{accountNumber}")
-    public void deposit(@PathVariable("accountNumber") String request, @RequestBody BigDecimal amount) {
+    public BigDecimal deposit(@PathVariable("accountNumber") String request, @RequestBody BigDecimal amount) {
         accountService.depositCurrency(request, amount);
+        return accountService.getBalance(request);
     }
 
     @PutMapping("withdraw/{accountNumber}")

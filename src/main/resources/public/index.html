@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"/>
+
     <!-- <script src = "getbalance.js"></script>-->
+
 </head>
 <body>
 
 <br/>
 <br/>
-<p id="lihtsalt_tekst1">
+
+
+<h1 id="lihtsalt_tekst1">
     WELCOME TO THE BANK!
-</p>
+</h1>
+<!--NAV bari algus kind off-->
+<a href="uus.html">Click me</a>
+
 <br/>
 <p id="lihtsalt_tekst2">
-    Your account balance.
+    YOUR ACCOUNT BALANCE
 </p>
 
-<!-- Fetch: getBalance -->
+<!-- FETCH: getBALANCE -->
+<!-- FETCH: getBALANCE -->
+<!-- FETCH: getBALANCE -->
 
 <input id="balance_input" placeholder="Enter account number"/>
-
-<button id="balance_button">
+<button id="balance_button" type="button" class="btn btn-success">
     Get account balance
 </button>
-
 <p id="output_text_balance">
     ...........</p>
-<br/>
-<br/>
-<script>
 
+<script>
     let balance_account_variable = document.getElementById("balance_input");
     let balance_button = document.getElementById("balance_button");
-
     let balance_output = document.getElementById("output_text_balance");
-
     balance_button.onclick = function () {
         fetch("balance/" + balance_account_variable.value, {
             method: 'GET',
@@ -55,35 +63,37 @@
                 messages.innerText = 'This does not seem right';
             });
     };
-
 </script>
 
+<!-- FETCH: depositMONEY -->
+<!-- FETCH: depositMONEY -->
+<!-- FETCH: depositMONEY -->
 
-<!-- Fetch: depositMoney -->
+<br/>
+<br/>
 <p id="lihtsalt_tekst3">
-    Deposit funds.
+    DEPOSIT FUNDS
 </p>
-
 
 <input id="deposit_account_variable" placeholder="Enter account number"/>
 <input id="deposit_amount_variable" placeholder="Enter deposit amount"/>
-<button id="deposit_button">
-    Deposit Money
+
+
+<button id="deposit_button" type="button" class="btn btn-success">
+    Deposit Funds
 </button>
+
 
 <p id="output_text_newbalance">
     Write new balance here</p>
 
-
 <script>
-
     /*@PutMapping("deposit/{accountNumber}")*/
     let deposit_account_variable = document.getElementById("deposit_account_variable");
     let deposit_amount_variable = document.getElementById("deposit_amount_variable"); /*see läheb bodysse*/
-    let deposit_button = document.getElementById("deposit_button");
 
+    let deposit_button = document.getElementById("deposit_button");
     let new_balance_output = document.getElementById("output_text_newbalance");
-    
     deposit_button.onclick = function () {
         fetch("deposit/" + deposit_account_variable.value, {
             method: 'PUT',
@@ -91,6 +101,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: deposit_amount_variable.value
         })
             .then(function (response) {
                 return response.json();
@@ -100,7 +111,128 @@
                 new_balance_output.innerHTML = jsonData;
             })
             .catch(function (err) {
-                messages.innerText = 'This does not seem right';
+                /*messages.innerText = 'This does not seem right';*/
+            });
+    };
+
+
+</script>
+
+
+<!-- FETCH: TRANSFER -->
+<!-- FETCH: TRANSFER -->
+<!-- FETCH: TRANSFER -->
+
+<br>
+<br>
+<p id="lihtsalt_tekst4">
+    TRANSFER FUNDS
+</p>
+
+
+<input id="transfer_from_variable" placeholder="From account"/>
+<input id="transfer_to_variable" placeholder="To account"/>
+<br/>
+<input id="transfer_amount_variable" placeholder="Enter transfer amount"/>
+
+<button id="transfer_funds_button" type="button" class="btn btn-success">
+    Transfer Funds
+</button>
+<p id="transfer_to_balance">
+    New "To" Account balance</p>
+
+<script>
+    let transfer_from_variable = document.getElementById("transfer_from_variable");
+    let transfer_to_variable = document.getElementById("transfer_to_variable");
+    let transfer_amount_variable = document.getElementById("transfer_amount_variable");
+
+    let transfer_to_balance = document.getElementById("transfer_to_balance");
+
+    let transfer_funds_button = document.getElementById("transfer_funds_button");
+    transfer_funds_button.onclick = function () {
+        fetch("transfer/" + transfer_from_variable.value + "," + transfer_to_variable.value, {
+            method: 'PUT',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: transfer_amount_variable.value
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (jsonData) {
+                console.log(jsonData.status);
+                if (jsonData.status == 200) {
+                    console.log(jsonData);
+                    transfer_to_balance.innerHTML = jsonData;
+                } else {
+                    transfer_to_balance.innerHTML = "Ilmnes viga";
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+                transfer_to_balance.innerHTML = "Ilmnes viga";
+            });
+    };
+
+</script>
+
+
+<!-- FETCH: createACCOUNT -->
+<!-- FETCH: createACCOUNT -->
+<!-- FETCH: createACCOUNT -->
+
+<br>
+<br>
+<p id="lihtsalt_tekst5">
+    CREATE YOUR ACCOUNT
+</p>
+
+<input id="create_account_variable" placeholder="New account number"/>
+<input id="create_balance_variable" placeholder="Enter balance"/>
+<input id="create_id_variable" placeholder="Enter ID"/>
+
+<button id="create_account_button" type="button" class="btn btn-success">
+    Create Account
+</button>
+<p id="create_account_balance">
+    New Account balance</p>
+
+<script>
+    let create_account_variable = document.getElementById("create_account_variable");
+    let create_balance_variable = document.getElementById("create_balance_variable");
+    let create_id_variable = document.getElementById("create_id_variable");
+    let create_account_balance = document.getElementById("create_account_balance");
+    let create_account_button = document.getElementById("create_account_button");
+    create_account_button.onclick = function () {
+        fetch("createAccount/", {
+            method: 'PUT',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                accountNumber: create_account_variable.value,
+                balance: create_balance_variable.value,
+                id: create_id_variable.value
+            })
+        })
+            //            .then(function (response) {
+            //                 return response.json();
+            //             })
+            .then(function (jsonData) {
+                console.log(jsonData.status);
+                if (jsonData.status == 200) {
+                    console.log(jsonData);
+                    create_account_balance.innerHTML = "OK";
+                } else {
+                    create_account_balance.innerHTML = "Ilmnes viga";
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+                create_account_balance.innerHTML = "Ilmnes viga";
             });
     };
 
