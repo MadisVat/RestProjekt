@@ -6,42 +6,62 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet author="madvat" id="changelog-1.0">
 
-        <createTable tableName="bank">
-
+        <createTable tableName="clients">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints nullable="true" primaryKey="true" unique="true"/>
+                <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
 
-            <column name="account_no" type="text">
-                <constraints nullable="true" primaryKey="false" unique="true"/>
-            </column>
-
-            <column name="balance" type="numeric">
+            <column name="first_name" type="text">
                 <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
 
+            <column name="last_name" type="text">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
 
         </createTable>
 
-        <!--<createTable tableName="transaction_history">
-
-            <column name="transaction_id" type="bigint" autoIncrement="true">
-                <constraints nullable="true" primaryKey="true" unique="true"/>
+        <createTable tableName="bank">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-
             <column name="account_no" type="text">
-                <constraints nullable="true" primaryKey="false" unique="true"/>
+                <constraints nullable="false" primaryKey="false" unique="true"/>
             </column>
-
             <column name="balance" type="numeric">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false"
+                             unique="true"
+                             foreignKeyName="fk_bank_clients"
+                             references="clients(id)"/>
+            </column>
+        </createTable>
 
-            <column name="account_id" type="bigint">
-                <constraints nullable="true" unique="true" foreignKeyName="fk_transaction_history_account"
+
+        <createTable tableName="transaction_history">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+
+            <column name="from_account" type="bigint">
+                <constraints nullable="false" primaryKey="false" unique="false" foreignKeyName="fk_transaction_history_bank"
                              references="bank(id)"/>
             </column>
-        </createTable>-->
+
+            <column name="to_account" type="bigint">
+                <constraints nullable="false" primaryKey="false" unique="false" foreignKeyName="fk_transaction_history_clients"
+                             references="clients(id)"/>
+            </column>
+
+            <column name="sum" type="numeric">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+        </createTable>
+
+
 
     </changeSet>
 </databaseChangeLog>

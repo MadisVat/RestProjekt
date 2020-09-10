@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<br/>
+
 <br/>
 
 
@@ -70,7 +70,7 @@
 <!-- FETCH: depositMONEY -->
 
 <br/>
-<br/>
+
 <p id="lihtsalt_tekst3">
     DEPOSIT FUNDS
 </p>
@@ -123,8 +123,11 @@
 <!-- FETCH: TRANSFER -->
 <!-- FETCH: TRANSFER -->
 
+
+<!-- TODO response kirjega on mingi kamm -->
+
 <br>
-<br>
+
 <p id="lihtsalt_tekst4">
     TRANSFER FUNDS
 </p>
@@ -162,17 +165,11 @@
                 return response.json();
             })
             .then(function (jsonData) {
-                console.log(jsonData.status);
-                if (jsonData.status == 200) {
-                    console.log(jsonData);
-                    transfer_to_balance.innerHTML = jsonData;
-                } else {
-                    transfer_to_balance.innerHTML = "Ilmnes viga";
-                }
+                console.log(jsonData);
+                transfer_to_balance.innerHTML = jsonData;
             })
             .catch(function (err) {
-                console.log(err);
-                transfer_to_balance.innerHTML = "Ilmnes viga";
+                messages.innerText = 'This does not seem right';
             });
     };
 
@@ -183,7 +180,6 @@
 <!-- FETCH: createACCOUNT -->
 <!-- FETCH: createACCOUNT -->
 
-<br>
 <br>
 <p id="lihtsalt_tekst5">
     CREATE YOUR ACCOUNT
@@ -237,7 +233,6 @@
     };
 
 </script>
-
 
 </body>
 </html>

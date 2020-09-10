@@ -28,8 +28,9 @@ public class DataController {
     }
 
     @PutMapping("transfer/{fromAccountNumber},{toAccountNumber}")
-    public void transfer(@PathVariable String fromAccountNumber, @PathVariable String toAccountNumber, @RequestBody BigDecimal amount) {
+    public BigDecimal transfer(@PathVariable String fromAccountNumber, @PathVariable String toAccountNumber, @RequestBody BigDecimal amount) {
         accountService.transferCurrency(fromAccountNumber, toAccountNumber, amount);
+        return accountService.getBalance(toAccountNumber);
     }
 
     @PutMapping("createAccount")
@@ -42,8 +43,26 @@ public class DataController {
             "balance": 0,
             "id": 8888
     }*/
+
+        // TODO SQL 3 tabelit
+        // TODO transaction history
+
+//        Ülesanne BankController (loeng 10)
+//
+//        Loo uus meetod createClient kus sisestakase kliendi
+//        andmed ja tagastatakse kliendi id
+//
+//        Täienda meetodid createAccount, et ta peab sisse
+//        lugema ka cliendi id
+//
+//        Loo uus tabel transaction_history
+//
+//        Iga kord kui tehakse deposit, withdraw või transfer
+//        lisa kirja transaction_history tabelisse tegevuse
+//                sisuga
+
+
+
+
     }
-
-
-
 }

@@ -40,8 +40,8 @@ public class AccountService {
         System.out.println("New Balance: " + newBalance);
         accountRepository.updateBalance(fromAccount, newBalance);
     }
-
-    public void transferCurrency(String fromAccount, String toAccount, BigDecimal amount) {
+    // TODO negatiivsed  SUMMAD TULEKS ÄRA KEELATA
+    public BigDecimal transferCurrency(String fromAccount, String toAccount, BigDecimal amount) {
         accountRepository.getBalance(fromAccount);
         BigDecimal currentBalanceFrom = accountRepository.getBalance(fromAccount);
         System.out.println("Current balance \"From Account\": " + currentBalanceFrom);
@@ -56,8 +56,10 @@ public class AccountService {
             BigDecimal newBalanceTo = currentBalanceTo.add(amount);
             System.out.println("New balance \"TO Account\": " + newBalanceTo);
             accountRepository.updateBalance(toAccount, newBalanceTo);
+            return accountRepository.getBalance(toAccount);
         } else {
             System.out.println("Insufficient funds");
+            return accountRepository.getBalance(toAccount);
         }
     }
 

@@ -16,7 +16,7 @@ public class SpringSecurityConfigurations extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 /*.antMatchers("/", "/home").permitAll()*/  //ilma suunab automaatselt login lehele
                 /*.anyRequest().authenticated()*/
-                .anyRequest().permitAll()   // TODO see teeb paroolivabaks kõik päringud
+                .anyRequest().permitAll()   // NB see teeb paroolivabaks kõik päringud
                 .and()
                 .formLogin()
                 .permitAll()
