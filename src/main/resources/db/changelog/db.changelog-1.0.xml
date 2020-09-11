@@ -47,13 +47,13 @@
             </column>
 
             <column name="from_account" type="bigint">
-                <constraints nullable="false" primaryKey="false" unique="false" foreignKeyName="fk_transaction_history_bank"
+                <constraints nullable="true" primaryKey="false" unique="false" foreignKeyName="fk_madis1"
                              references="bank(id)"/>
             </column>
 
             <column name="to_account" type="bigint">
-                <constraints nullable="false" primaryKey="false" unique="false" foreignKeyName="fk_transaction_history_clients"
-                             references="clients(id)"/>
+                <constraints nullable="true" primaryKey="false" unique="false" foreignKeyName="fk_madis2"
+                             references="bank(id)"/>
             </column>
 
             <column name="sum" type="numeric">
