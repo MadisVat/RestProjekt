@@ -7,8 +7,9 @@ public class TestVarA {
     public static void main(String[] args) {
 
 
-        System.out.println(rkPindala(5, 6));
-        System.out.println("Tegu on sajandiga: " + aastaArv(0));
+        // System.out.println(rkPindala(5, 6));
+        System.out.println(secondLetter("12345678"));
+        //System.out.println("Tegu on sajandiga: " + aastaArv(0));
     }
 
     public static int rkPindala(int a, int b) {
@@ -21,8 +22,15 @@ public class TestVarA {
         return a / 100 + 1;
     }
 
-
-
+    public static String secondLetter(String in) {
+        String out = "";
+        for (int i = 0; i < in.length(); i = i + 2) {
+            if (i % 2 == 0) {
+                out = out + in.substring(i, i + 1) + " ";
+            }
+        }
+        return out;
+    }
 }
 
 
